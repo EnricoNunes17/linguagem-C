@@ -1,0 +1,4 @@
+USER:enrico,ITENS:2,TOTAL:45.50
+ITEM:Pizza Margherita,PRECO:42.50
+ITEM:Agua Mineral,PRECO:3.00
+---FIM---

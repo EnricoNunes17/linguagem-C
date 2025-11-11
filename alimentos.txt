@@ -1,0 +1,6 @@
+Pizza Margherita,Pizza,730,42.50
+X-Burger Salada,Lanche,580,22.00
+Sushi Misto,Japones,450,55.00
+Frango Grelhado,Refeicao,350,25.00
+Refrigerante Lata,Bebida,140,5.00
+Agua Mineral,Bebida,0,3.00
