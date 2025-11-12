@@ -1,4 +1,3 @@
-// usuarios.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +13,7 @@ void menu_principal() {
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
-        getchar(); // limpa o buffer
+        getchar(); 
 
         switch(opcao) {
             case 1: cadastrar_usuario(); break;
@@ -92,8 +91,8 @@ void menu_usuario(const char *username) {
         printf("\n=== Menu do Usuário (%s) ===\n", username);
         printf("1 - Buscar alimento\n");
         printf("2 - Listar informações de alimento\n");
-        printf("3 - Gerenciar meus pedidos\n"); // Alterado
-        printf("4 - Avaliar um item\n");      // Alterado
+        printf("3 - Gerenciar meus pedidos\n"); 
+        printf("4 - Avaliar um item\n");      
         printf("0 - Logout\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -107,7 +106,6 @@ void menu_usuario(const char *username) {
                 listar_info_alimento();
                 break;
             case 3:
-                // Agora chama o NOVO sub-menu de pedidos
                 menu_gerenciar_pedidos(username);
                 break;
             case 4:
