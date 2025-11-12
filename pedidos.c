@@ -149,7 +149,7 @@ void salvar_pedido(Pedido *p) {
     printf("Pedido salvo com sucesso!\n");
 } 
 void listar_pedidos_usuario(const char *username) {
-    // Aula 08: fopen() no modo "r" (read)
+    
     FILE *arq = fopen("pedidos.txt", "r");
     if (arq == NULL) {
         printf("Nenhum pedido salvo encontrado.\n");
