@@ -2,3 +2,6 @@ USER:enrico,ITENS:2,TOTAL:45.50
 ITEM:Pizza Margherita,PRECO:42.50
 ITEM:Agua Mineral,PRECO:3.00
 ---FIM---
+USER:Miguel,ITENS:1,TOTAL:22.00
+ITEM:X-Burger Salada,PRECO:22.00
+---FIM---

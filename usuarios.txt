@@ -1,1 +1,3 @@
 enrico,enrico@gmail.com,feifood
+joao,joao.fei@gmail.com,FEIFOOD
+Miguel,miguel.fei@gmail.com,FEI

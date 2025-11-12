@@ -1,15 +1,6 @@
-// pedidos.c (COMPLETO E CORRIGIDO - V2)
+#include "feifood.h" 
 
-#include "feifood.h" // Inclui nossas structs (Alimento, Pedido) e outras funções
 
-// ===================================================================
-// MENU PRINCIPAL DE PEDIDOS
-// ===================================================================
-
-/**
- * @brief Exibe o menu de gerenciamento de pedidos (Criar, Listar, Excluir).
- * @param username O nome do usuário logado.
- */
 void menu_gerenciar_pedidos(const char *username) {
     int opcao;
     do {
@@ -20,29 +11,21 @@ void menu_gerenciar_pedidos(const char *username) {
         printf("0 - Voltar\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
-        getchar(); // Limpa o buffer do scanf
+        getchar(); 
 
         switch(opcao) {
             case 1: criar_novo_pedido(username); break;
             case 2: listar_pedidos_usuario(username); break;
             case 3: excluir_pedido(username); break;
-            case 0: return; // Volta ao menu anterior
+            case 0: return; 
             default: printf("Opcao invalida.\n");
         }
     } while(1);
 }
 
-// ===================================================================
-// FUNÇÕES DE CRIAÇÃO DE PEDIDO (Ações 1, 2, 3 do PDF)
-// ===================================================================
 
-/**
- * @brief Inicia a criação de um novo pedido (carrinho de compras).
- * Permite adicionar, remover e ver itens antes de salvar.
- * @param username O nome do usuário que está criando o pedido.
- */
 void criar_novo_pedido(const char *username) {
-    // Aula 09: Declarando uma variável do tipo struct
+    
     Pedido p;
     strcpy(p.username, username);
     p.num_itens = 0;
@@ -63,7 +46,7 @@ void criar_novo_pedido(const char *username) {
         getchar();
 
         switch(opcao) {
-            // Aula 07: Passando o endereço da struct (&p)
+            
             case 1: adicionar_item_pedido(&p); break;
             case 2: remover_item_pedido(&p); break;
             case 3: ver_carrinho(&p); break; 
@@ -78,10 +61,7 @@ void criar_novo_pedido(const char *username) {
     } while (1);
 }
 
-/**
- * @brief Adiciona um alimento ao carrinho (struct Pedido).
- * @param p Ponteiro para a struct Pedido que está sendo modificada.
- */
+
 void adicionar_item_pedido(Pedido *p) {
     if (p->num_itens >= 20) {
         printf("Carrinho cheio!\n");
@@ -93,41 +73,34 @@ void adicionar_item_pedido(Pedido *p) {
     fgets(nomeAlimento, sizeof(nomeAlimento), stdin);
     nomeAlimento[strcspn(nomeAlimento, "\n")] = 0;
 
-    // Usa a função de 'alimentos.c' para buscar o alimento
+    
     Alimento al = buscar_alimento_por_nome(nomeAlimento);
 
     if (al.preco == 0) { 
         printf("Alimento '%s' não encontrado!\n", nomeAlimento);
     } else {
-        // Aula 07/09: Acessando membro de struct via ponteiro (->)
-        // ou acessando array de struct direto (.)
+        
         p->itens[p->num_itens] = al; 
         p->num_itens++;
-        p->total_preco += al.preco; // Atualiza o total
+        p->total_preco += al.preco; 
         printf("%s (R$ %.2f) adicionado ao carrinho!\n", al.nome, al.preco);
     }
 }
 
-/**
- * @brief Remove o último alimento adicionado ao carrinho.
- * @param p Ponteiro para a struct Pedido.
- */
+
 void remover_item_pedido(Pedido *p) {
     if (p->num_itens == 0) {
         printf("Carrinho já está vazio!\n");
         return;
     }
     
-    p->num_itens--; // Apenas decrementa o contador
-    Alimento al = p->itens[p->num_itens]; // Pega o item que foi "removido"
-    p->total_preco -= al.preco; // Atualiza o total
+    p->num_itens--; 
+    Alimento al = p->itens[p->num_itens]; 
+    p->total_preco -= al.preco; 
     printf("Item %s (R$ %.2f) removido.\n", al.nome, al.preco);
 }
 
-/**
- * @brief Lista todos os itens e o total do carrinho atual.
- * @param p Ponteiro para a struct Pedido.
- */
+
 void ver_carrinho(Pedido *p) {
     if (p->num_itens == 0) {
         printf("O carrinho está vazio.\n");
@@ -148,17 +121,14 @@ void ver_carrinho(Pedido *p) {
     printf("Preço Total: R$ %.2f\n", p->total_preco);
 }
 
-/**
- * @brief Salva o pedido (carrinho) em "pedidos.txt".
- * @param p Ponteiro para a struct Pedido.
- */
+
 void salvar_pedido(Pedido *p) {
     if (p->num_itens == 0) {
         printf("Não é possível salvar um pedido vazio.\n");
         return;
     }
     
-    // Aula 08: fopen() no modo "a" (append)
+    
     FILE *arq = fopen("pedidos.txt", "a"); 
     if (arq == NULL) {
         printf("Erro ao salvar pedido!\n");
@@ -173,20 +143,11 @@ void salvar_pedido(Pedido *p) {
         fprintf(arq, "ITEM:%s,PRECO:%.2f\n", 
             p->itens[i].nome, p->itens[i].preco);
     }
-    fprintf(arq, "---FIM---\n"); // Delimitador
+    fprintf(arq, "---FIM---\n"); 
     
-    fclose(arq); // Aula 08: fclose()
+    fclose(arq); 
     printf("Pedido salvo com sucesso!\n");
-} // <--- **** ESTA CHAVE ESTAVA FALTANDO ****
-
-// ===================================================================
-// FUNÇÕES DE GERENCIAMENTO DE PEDIDOS SALVOS (Ação 4 do PDF)
-// ===================================================================
-
-/**
- * @brief Lista todos os pedidos salvos no "pedidos.txt" para o usuário logado.
- * @param username O nome do usuário.
- */
+} 
 void listar_pedidos_usuario(const char *username) {
     // Aula 08: fopen() no modo "r" (read)
     FILE *arq = fopen("pedidos.txt", "r");
@@ -204,16 +165,14 @@ void listar_pedidos_usuario(const char *username) {
 
     
     while (fgets(linha, sizeof(linha), arq)) {
-        // Aula 06: sscanf para ler dados formatados de uma string
+        
         if (sscanf(linha, "USER:%[^,],", userLido) == 1) {
             
-            // Aula 06: strcmp para comparar strings
+            
             if (strcmp(userLido, username) == 0) {
                 encontrou = 1;
                 printf("\n--- Pedido ID: %d ---\n", pedidoID);
-                printf("%s", linha); // Imprime a linha USER:
-
-                // Lê e imprime as linhas ITEM: até o delimitador
+                printf("%s", linha); 
                 while (fgets(linha, sizeof(linha), arq) && strncmp(linha, "---FIM---", 9) != 0) {
                     printf("  %s", linha);
                 }
@@ -228,12 +187,9 @@ void listar_pedidos_usuario(const char *username) {
     fclose(arq);
 }
 
-/**
- * @brief Exclui um pedido salvo do "pedidos.txt" com base em um ID.
- * @param username O nome do usuário (para segurança).
- */
+
 void excluir_pedido(const char *username) {
-    // 1. Mostrar os pedidos para o usuário saber o ID
+    
     listar_pedidos_usuario(username);
     
     int idParaExcluir;
@@ -246,7 +202,7 @@ void excluir_pedido(const char *username) {
         return;
     }
 
-    // 2. Abrir arquivos (original para ler, temp para escrever)
+    
     FILE *original = fopen("pedidos.txt", "r");
     FILE *temporario = fopen("temp.txt", "w"); 
 
@@ -262,8 +218,8 @@ void excluir_pedido(const char *username) {
     int pedidoID = 1;
     int excluido = 0;
     
-    // 3. Copiar dados, pulando o bloco a ser excluído
-    while (fgets(linha, sizeof(linha), original)) { // <-- CORRIGIDO
+    
+    while (fgets(linha, sizeof(linha), original)) { 
         int manter = 1; 
 
         if (sscanf(linha, "USER:%[^,],", userLido) == 1) {
@@ -279,21 +235,21 @@ void excluir_pedido(const char *username) {
         if (manter) {
             fprintf(temporario, "%s", linha);
         } else {
-            // Pula as linhas de ITEM até o fim do bloco
+            
             while (fgets(linha, sizeof(linha), original) && strncmp(linha, "---FIM---", 9) != 0) { // <-- CORRIGIDO
-                // Não faz nada, apenas consome as linhas
+                
             }
         }
     }
 
-    // 4. Fechar e substituir os arquivos
+    
     fclose(original);
     fclose(temporario);
 
     if (excluido) {
-        // Aula 08: remove() apaga um arquivo
+        
         remove("pedidos.txt"); 
-        // rename() é da stdio.h, muda o nome de "temp.txt" para "pedidos.txt"
+        
         rename("temp.txt", "pedidos.txt"); 
         printf("Pedido ID %d excluído com sucesso.\n", idParaExcluir);
     } else {
